@@ -36,6 +36,27 @@ $ yarn create @bazel
 
 See the output of the tool for command-line options and next steps.
 
+## Adopters
+
+Thanks to the following active users!
+
+Open-source repositories:
+
+- [Angular](https://github.com/angular/angular)
+- [Angular CLI](https://github.com/angular/angular-cli)
+- [Angular Components](https://github.com/angular/components)
+- [Selenium](https://github.com/SeleniumHQ/selenium)
+- [NgRX](https://github.com/ngrx/platform)
+- [tsickle](https://github.com/angular/tsickle)
+- [incremental-dom](https://github.com/google/incremental-dom)
+
+Organizations:
+
+- [Evertz](https://www.evertz.com)
+- [LucidChart](https://www.lucidchart.com)
+
+Not on this list? [Send a PR](https://github.com/bazelbuild/rules_nodejs/edit/master/README.md) to add your repo or organization!
+
 ## Adding Build Targets
 
 Consult the documentation at http://bazel.build for details.
@@ -79,8 +100,8 @@ containing:
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "8a913d257f3a14c0663107607205e3bbf8d5ddd306a0e54ce28c79cb76f9122e",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.32.1/rules_nodejs-0.32.1.tar.gz"],
+    sha256 = "6d4edbf28ff6720aedf5f97f9b9a7679401bf7fca9d14a0fff80f644a99992b4",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.32.2/rules_nodejs-0.32.2.tar.gz"],
 )
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
