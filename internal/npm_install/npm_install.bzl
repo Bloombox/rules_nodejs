@@ -22,7 +22,7 @@ See discussion in the README.
 """
 
 load("//internal/common:check_bazel_version.bzl", "check_bazel_version")
-load("//internal/common:os_name.bzl", "os_name")
+load("//internal/common:os_name.bzl", "is_windows_os")
 load("//internal/node:node_labels.bzl", "get_node_label", "get_npm_label", "get_yarn_label")
 
 COMMON_ATTRIBUTES = dict(dict(), **{
@@ -203,7 +203,7 @@ def _npm_install_impl(repository_ctx):
 
     _check_min_bazel_version("npm_install", repository_ctx)
 
-    is_windows = os_name(repository_ctx).find("windows") != -1
+    is_windows_host = is_windows_os(repository_ctx)
     node = repository_ctx.path(get_node_label(repository_ctx))
     npm = get_npm_label(repository_ctx)
     npm_args = ["install"]
@@ -220,7 +220,7 @@ def _npm_install_impl(repository_ctx):
         root = repository_ctx.path("")
 
     # The entry points for npm install for osx/linux and windows
-    if not is_windows:
+    if not is_windows_host:
         repository_ctx.file(
             "npm",
             content = """#!/usr/bin/env bash
@@ -266,7 +266,7 @@ cd "{root}" && "{npm}" {npm_args}
 
     repository_ctx.report_progress("Running npm install on %s" % repository_ctx.attr.package_json)
     result = repository_ctx.execute(
-        [repository_ctx.path("npm.cmd" if is_windows else "npm")],
+        [repository_ctx.path("npm.cmd" if is_windows_host else "npm")],
         timeout = repository_ctx.attr.timeout,
         quiet = repository_ctx.attr.quiet,
     )
@@ -370,7 +370,6 @@ def _yarn_install_impl(repository_ctx):
         timeout = repository_ctx.attr.timeout,
         quiet = repository_ctx.attr.quiet,
     )
-
     if result.return_code:
         fail("yarn_install failed: %s (%s)" % (result.stdout, result.stderr))
 
